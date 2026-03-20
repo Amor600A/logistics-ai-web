@@ -1,0 +1,5 @@
+# Ai .gitignore content
+*.env
+node_modules/
+
+
