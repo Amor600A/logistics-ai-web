@@ -1,2 +1,24 @@
-# logistics-ai-web
-基于智谱AI API的物流单据智能提取工具前端，vue3
+# logistics-ai-vue
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
