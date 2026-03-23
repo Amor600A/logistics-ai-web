@@ -1,26 +1,16 @@
 <template>
   <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
+    <!-- 路由链接 -->
+  <nav>
+    <router-link to="/">首页</router-link>
+    <router-link to="/extract">关于</router-link>
+  </nav>
+  <!-- 路由出口：显示匹配的组件 -->
+  <router-view></router-view>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue'
-
-export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
-}
+<script setup>
+// 👇 新增这一行，导入 HelloWorld 组件
+// import HelloWorld from './components/HelloWorld.vue'
 </script>
-
-<style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
-</style>
