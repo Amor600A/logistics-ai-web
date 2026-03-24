@@ -1,23 +1,21 @@
 <template>
   <div class="extract-container">
     <h1>物流单据智能提取工具</h1>
-    
+
     <!-- 文本输入区域 -->
     <div class="input-area">
-      <textarea
-        v-model="inputText"
-        placeholder="请粘贴物流单据文本，例如：运单56789 货重3.5kg 收货人李四 电话13912345678"
-        rows="6"
-      ></textarea>
+      <textarea v-model="inputText" placeholder="请粘贴物流单据文本，例如：运单56789 货重3.5kg 收货人李四 电话13912345678" rows="6"></textarea>
       <button @click="extractData" :disabled="loading">
         {{ loading ? '提取中...' : '开始提取' }}
       </button>
     </div>
 
     <!-- 结果展示区域 -->
-    <div class="result-area" v-if="result">
-      <h3>提取结果（JSON格式）</h3>
-      <pre>{{ JSON.stringify(result, null, 2) }}</pre>
+    <div style="padding: 3px;">
+      <h3 style="padding-bottom: 3px;">提取结果（JSON格式）</h3>
+      <div class="result-area" v-if="result">
+        <pre>{{ JSON.parse(JSON.stringify(result, null, 2)) }}</pre>
+      </div>
     </div>
 
     <!-- 错误提示 -->
@@ -37,6 +35,7 @@ const errorMsg = ref(''); // 错误提示
 
 // 调用后端API提取数据
 const extractData = async () => {
+  console.log('extractData 被调用了');
   if (!inputText.value.trim()) {
     errorMsg.value = '请输入物流单据文本！';
     return;
