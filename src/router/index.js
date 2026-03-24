@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import ExtractView from '../components/ExtractView.vue';
-import HelloWorld from '../components/HelloWorld.vue'
+import HelloWorld from '../components/HelloWorld.vue';
+import TreeView from '../components/TreeView.vue';
+import MenuView from '../components/MenuView.vue';
 
 const routes = [
   {
@@ -13,6 +15,16 @@ const routes = [
     path: '/extract',
     name: 'extract',
     component: ExtractView
+  },
+  {
+    path: '/tree',
+    name: 'tree',
+    component: TreeView
+  },
+  {
+    path: '/menu',
+    name: 'menu',
+    component: MenuView
   }
 ];
 
