@@ -90,7 +90,7 @@
 
 <script setup>
 import { ref, computed } from 'vue';
-import ExtractApiService from '@/services/extractApi';
+import ExtractApiService from '@/services/ExtractApiService';
 
 // 响应式数据
 const inputText = ref(''); // 输入的单据文本
@@ -140,9 +140,9 @@ const handleFileSelect = (event) => {
   if (file) {
     // 检查文件类型
     const allowedTypes = [
-      'text/plain', 
-      'application/msword', 
-      'application/vnd.openxmlformats-officedocument.wordprocessingml.document', 
+      'text/plain',
+      'application/msword',
+      'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
       'application/pdf',
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
       'application/vnd.ms-excel'
@@ -200,12 +200,18 @@ const confirmExtract = async () => {
   result.value = null;
 
   try {
-    if (inputType.value === 'upload') {
-      // 文件上传提取
-      await handleUploadExtract();
-    } else {
-      // 文本或文件路径提取
-      await handleTextExtract();
+    switch (inputType.value) {
+      case 'text':
+        await handleTextExtract();
+        break;
+      case 'file':
+        await handleFilePathExtract();
+        break;
+      case 'upload':
+        await handleUploadExtract();
+        break;
+      default:
+        throw new Error('不支持的输入类型');
     }
   } catch (err) {
     errorMsg.value = `接口调用失败：${err.message || '请检查后端服务是否启动'}`;
@@ -214,11 +220,27 @@ const confirmExtract = async () => {
   }
 };
 
-// 处理文本和文件路径提取
+// 处理文本提取
 const handleTextExtract = async () => {
   try {
     const apiResponse = await ExtractApiService.extractData(
-      inputType.value,
+      inputText.value
+    );
+
+    if (apiResponse.code === 200) {
+      result.value = apiResponse.data; // 展示提取结果
+    } else {
+      errorMsg.value = apiResponse.msg;
+    }
+  } catch (error) {
+    errorMsg.value = error.message;
+  }
+};
+
+// 处理文件路径提取
+const handleFilePathExtract = async () => {
+  try {
+    const apiResponse = await ExtractApiService.extractFromFilePath(
       inputText.value
     );
 

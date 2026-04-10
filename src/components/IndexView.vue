@@ -56,7 +56,7 @@
 </template>
 
 <script setup>
-import { ref, reactive, computed, onMounted } from 'vue';
+import { ref, reactive, computed, onMounted, markRaw } from 'vue';
 import { useRouter } from 'vue-router';
 import ExtractView from './ExtractView.vue';
 import TreeView from './TreeView.vue';
@@ -66,8 +66,16 @@ import HelloWorld from './HelloWorld.vue';
 const router = useRouter();
 const username = ref('');
 
+// 组件映射（使用markRaw避免不必要的响应式）
+const componentMap = {
+  HelloWorld: markRaw(HelloWorld),
+  ExtractView: markRaw(ExtractView),
+  TreeView: markRaw(TreeView),
+  MenuView: markRaw(MenuView)
+};
+
 // 当前显示的组件
-const currentComponent = ref('HelloWorld');
+const currentComponent = ref(componentMap.HelloWorld);
 
 // 菜单数据
 const menuItems = reactive([
@@ -75,7 +83,7 @@ const menuItems = reactive([
     id: 'dashboard',
     icon: '🏠',
     label: '系统首页',
-    component: HelloWorld,
+    component: componentMap.HelloWorld,
     description: '系统概览和快捷操作'
   },
   {
@@ -88,14 +96,14 @@ const menuItems = reactive([
         id: 'extract',
         icon: '📦',
         label: '运单提取',
-        component: ExtractView,
+        component: componentMap.ExtractView,
         description: '智能提取物流单据信息'
       },
       {
         id: 'tree',
         icon: '🌳',
         label: '树形视图',
-        component: TreeView,
+        component: componentMap.TreeView,
         description: '物流数据树形结构展示'
       }
     ]
@@ -110,7 +118,7 @@ const menuItems = reactive([
         id: 'menu',
         icon: '📋',
         label: '菜单管理',
-        component: MenuView,
+        component: componentMap.MenuView,
         description: '系统菜单导航管理'
       }
     ]
