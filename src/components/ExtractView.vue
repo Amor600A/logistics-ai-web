@@ -217,7 +217,7 @@ const confirmExtract = async () => {
 // 处理文本和文件路径提取
 const handleTextExtract = async () => {
   try {
-    const apiResponse = await ExtractApiService.extractData(
+    const apiResponse = await ExtractApiService.extractFromText(
       inputType.value,
       inputText.value
     );
